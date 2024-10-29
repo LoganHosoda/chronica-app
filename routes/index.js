@@ -4,22 +4,22 @@ const { ensureAuth, ensureGuest } = require('../middleware/auth');
 
 const Chronicle = require('../models/Chronicle');
 
-// @desc    Login/Landing Page
-// @route   GET /
+// @desc    login/landing page
+// @route   get /
 router.get('/', ensureGuest, (req, res) => {
   res.render('login', {
     layout: 'login',
   });
 })
 
-// @desc   Dashboard
-// @route  GET /dashboard1
+// @desc   dashboard
+// @route  get /dashboard1
 router.get('/dashboard', ensureAuth, async (req, res) => {
   try {
-   const chronicle = await Chronicle.find({ user: req.user.id }).lean()
+   const chronicles = await Chronicle.find({ user: req.user.id }).lean()
     res.render('dashboard', {
-      name: req.user.firstName,
-      chronicle 
+      name: req.user.firstname,
+      chronicles, 
     });
   } catch (err) {
     console.error(err); 
